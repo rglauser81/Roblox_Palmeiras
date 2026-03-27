@@ -55,10 +55,18 @@ GameConfig.FLOORS = {
 -- ============================================================
 -- 🌊 ONDAS
 -- ============================================================
-GameConfig.INTERMISSION_TIME   = 12
-GameConfig.BASE_MOBS_PER_WAVE  = 5
-GameConfig.MOBS_INCREMENT      = 3
-GameConfig.HP_SCALE_PER_ROUND  = 0.2
+GameConfig.INTERMISSION_TIME       = 12
+GameConfig.BASE_MOBS_PER_WAVE      = 5
+GameConfig.MOBS_INCREMENT          = 3
+GameConfig.MOBS_INCREMENT_PER_ROUND = GameConfig.MOBS_INCREMENT  -- alias
+GameConfig.HP_SCALE_PER_ROUND      = 0.2
+GameConfig.MAX_DIFFICULTY_ROUND    = 50
+
+-- ============================================================
+-- 💰 ECONOMIA
+-- ============================================================
+GameConfig.COINS_PER_KILL           = 10
+GameConfig.RARE_MOB_COIN_MULTIPLIER = 5
 
 -- ============================================================
 -- 🛍️ LOJA

@@ -8,9 +8,25 @@ local Players = game:GetService("Players")
 local EffectsController = {}
 
 local camera = workspace.CurrentCamera
+local killFlashFrame
 
 function EffectsController.init()
-    -- Inicialização futura (pós-processamento, etc.)
+    -- Cria o KillFlash programaticamente
+    local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+    local flashGui = Instance.new("ScreenGui")
+    flashGui.Name = "EffectsGui"
+    flashGui.ResetOnSpawn = false
+    flashGui.IgnoreGuiInset = true
+    flashGui.DisplayOrder = 100
+    flashGui.Parent = playerGui
+
+    killFlashFrame = Instance.new("Frame")
+    killFlashFrame.Name = "KillFlash"
+    killFlashFrame.Size = UDim2.new(1, 0, 1, 0)
+    killFlashFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    killFlashFrame.BackgroundTransparency = 1
+    killFlashFrame.BorderSizePixel = 0
+    killFlashFrame.Parent = flashGui
 end
 
 -- Trepidação de câmera ao matar um mob
@@ -38,12 +54,9 @@ end
 
 -- Efeito de flash branco ao matar
 function EffectsController.killFlash()
-    local gui = Players.LocalPlayer.PlayerGui
-    local flash = gui:FindFirstChild("KillFlash")
-    if not flash then return end
-
-    flash.BackgroundTransparency = 0.4
-    TweenService:Create(flash, TweenInfo.new(0.3), { BackgroundTransparency = 1 }):Play()
+    if not killFlashFrame then return end
+    killFlashFrame.BackgroundTransparency = 0.4
+    TweenService:Create(killFlashFrame, TweenInfo.new(0.3), { BackgroundTransparency = 1 }):Play()
 end
 
 function EffectsController.spawnKillEffect(character)
