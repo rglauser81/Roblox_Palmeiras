@@ -14,8 +14,8 @@ GameConfig.NATHAN_DISPLAY_NAME = "NathanGaimer42"
 -- ESTADIO — Layout unico (sem andares multiplos)
 -- ============================================================
 GameConfig.STADIUM = {
-    FIELD_LENGTH   = 160,   -- comprimento do campo (X)
-    FIELD_WIDTH    = 100,   -- largura do campo (Z)
+    FIELD_LENGTH   = 240,   -- comprimento do campo (X) +50%
+    FIELD_WIDTH    = 150,   -- largura do campo (Z) +50%
     FIELD_Y        = 0,     -- altura do gramado
     STAND_HEIGHT   = 20,    -- altura das arquibancadas
     STAND_ROWS     = 5,     -- fileiras de assentos
@@ -48,6 +48,41 @@ GameConfig.MAX_DIFFICULTY_ROUND    = 50
 -- ============================================================
 GameConfig.COINS_PER_KILL           = 10
 GameConfig.RARE_MOB_COIN_MULTIPLIER = 5
+
+-- ============================================================
+-- REBIRTH — Reseta coins/kills em troca de multiplicador permanente
+-- ============================================================
+GameConfig.REBIRTH = {
+    BASE_COST        = 1000,    -- custo do primeiro rebirth
+    COST_MULTIPLIER  = 2.2,     -- custo escala por rebirth (custo = BASE * MULT^rebirth)
+    COIN_MULT_PER_RB = 0.5,     -- +0.5x coins por rebirth (rebirth 1 = 1.5x, 2 = 2x)
+    DMG_MULT_PER_RB  = 0.1,     -- +10% dano por rebirth
+    MAX_REBIRTHS     = 50,
+    RESET_KILLS      = true,    -- reseta kills no rebirth
+    RESET_COINS      = true,    -- reseta coins no rebirth
+}
+
+-- ============================================================
+-- INDICE BRAINROT — Colecao de todos os brainrots com tiers
+-- ============================================================
+GameConfig.INDEX_TIERS = {
+    { name = "Normal",    color = Color3.fromRGB(180, 180, 180), killsNeeded = 0,    icon = "" },
+    { name = "Bronze",    color = Color3.fromRGB(205, 127, 50),  killsNeeded = 10,   icon = "" },
+    { name = "Prata",     color = Color3.fromRGB(192, 192, 192), killsNeeded = 50,   icon = "" },
+    { name = "Ouro",      color = Color3.fromRGB(255, 215, 0),   killsNeeded = 200,  icon = "" },
+    { name = "Diamante",  color = Color3.fromRGB(0, 200, 255),   killsNeeded = 1000, icon = "" },
+    { name = "Lendario",  color = Color3.fromRGB(255, 50, 255),  killsNeeded = 5000, icon = "" },
+}
+
+-- Recompensas por completar tier de um mob
+GameConfig.INDEX_TIER_REWARDS = {
+    Normal   = 0,
+    Bronze   = 50,
+    Prata    = 200,
+    Ouro     = 1000,
+    Diamante = 5000,
+    Lendario = 25000,
+}
 
 -- ============================================================
 -- LOJA
@@ -122,7 +157,7 @@ GameConfig.MINIGAMES = {
         description = "Desvie dos cones brainrot!",
         duration = 15,
         reward = 80,
-        position = Vector3.new(-55, 0, 35),
+        position = Vector3.new(-82, 0, 52),
     },
     {
         id = "penalty_shootout",
@@ -130,7 +165,7 @@ GameConfig.MINIGAMES = {
         description = "Marque gols contra o goleiro!",
         duration = 20,
         reward = 100,
-        position = Vector3.new(55, 0, -35),
+        position = Vector3.new(82, 0, -52),
     },
     {
         id = "keepy_uppy",
@@ -138,7 +173,7 @@ GameConfig.MINIGAMES = {
         description = "Mantenha a bola no ar!",
         duration = 12,
         reward = 60,
-        position = Vector3.new(0, 0, -40),
+        position = Vector3.new(0, 0, -60),
     },
     {
         id = "tackle_dodge",
@@ -146,7 +181,7 @@ GameConfig.MINIGAMES = {
         description = "Desvie dos brainrots que dao carrinho!",
         duration = 15,
         reward = 90,
-        position = Vector3.new(0, 0, 40),
+        position = Vector3.new(0, 0, 60),
     },
     {
         id = "target_kick",
@@ -154,7 +189,7 @@ GameConfig.MINIGAMES = {
         description = "Acerte os alvos com a bola!",
         duration = 18,
         reward = 120,
-        position = Vector3.new(-55, 0, -35),
+        position = Vector3.new(-82, 0, -52),
     },
     {
         id = "speed_dribble",
@@ -162,7 +197,7 @@ GameConfig.MINIGAMES = {
         description = "Corra com a bola ate o outro lado!",
         duration = 10,
         reward = 70,
-        position = Vector3.new(55, 0, 35),
+        position = Vector3.new(82, 0, 52),
     },
 }
 
@@ -170,12 +205,12 @@ GameConfig.MINIGAMES = {
 -- BRAINROT NPCs (decorativos + interativos pelo estadio)
 -- ============================================================
 GameConfig.STADIUM_NPCS = {
-    { name = "Tralalero Torcedor",   color = "Bright red",    pos = Vector3.new(-30, 0, 48),  action = "cheer" },
-    { name = "Bombardino Goleiro",   color = "Bright green",  pos = Vector3.new(-70, 0, 0),   action = "guard" },
+    { name = "Tralalero Torcedor",   color = "Bright red",    pos = Vector3.new(-45, 0, 72),  action = "cheer" },
+    { name = "Bombardino Goleiro",   color = "Bright green",  pos = Vector3.new(-105, 0, 0),  action = "guard" },
     { name = "Tung Tung Arbitro",    color = "Really black",  pos = Vector3.new(0, 0, 0),     action = "whistle" },
-    { name = "Cappuccino Vendedor",  color = "Brown",         pos = Vector3.new(30, 0, 48),   action = "sell" },
-    { name = "Lirili Comentarista",  color = "Bright purple", pos = Vector3.new(-70, 20, 40), action = "commentate" },
-    { name = "Brio Boss Final",      color = "Gold",          pos = Vector3.new(0, 0, -48),   action = "boss" },
+    { name = "Cappuccino Vendedor",  color = "Brown",         pos = Vector3.new(45, 0, 72),   action = "sell" },
+    { name = "Lirili Comentarista",  color = "Bright purple", pos = Vector3.new(-105, 20, 60), action = "commentate" },
+    { name = "Brio Boss Final",      color = "Gold",          pos = Vector3.new(0, 0, -72),   action = "boss" },
 }
 
 -- ============================================================

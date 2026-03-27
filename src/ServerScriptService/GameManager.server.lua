@@ -30,10 +30,36 @@ local function onPlayerAdded(player)
     highRound.Value = 0
     highRound.Parent = leaderstats
 
+    local rebirthLeader = Instance.new("IntValue")
+    rebirthLeader.Name = "Rebirths"
+    rebirthLeader.Value = 0
+    rebirthLeader.Parent = leaderstats
+
     -- Perfil interno (não visível no leaderboard — usado pelos serviços)
     local profile = Instance.new("Folder")
     profile.Name   = "PlayerProfile"
     profile.Parent = player
+
+    -- Rebirth data
+    local rebirths = Instance.new("IntValue")
+    rebirths.Name = "Rebirths"
+    rebirths.Value = 0
+    rebirths.Parent = profile
+
+    local coinMult = Instance.new("NumberValue")
+    coinMult.Name = "CoinMultiplier"
+    coinMult.Value = 1
+    coinMult.Parent = profile
+
+    local dmgMult = Instance.new("NumberValue")
+    dmgMult.Name = "DamageMultiplier"
+    dmgMult.Value = 1
+    dmgMult.Parent = profile
+
+    -- Brainrot Index (kills por tipo de mob)
+    local brainrotIndex = Instance.new("Folder")
+    brainrotIndex.Name = "BrainrotIndex"
+    brainrotIndex.Parent = profile
 end
 
 Players.PlayerAdded:Connect(onPlayerAdded)

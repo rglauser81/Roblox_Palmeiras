@@ -141,6 +141,14 @@ local function setupBallCollision(ball, player)
         local damage = ball:GetAttribute("Damage") or FB.BALL_BASE_DAMAGE
         local charge = ball:GetAttribute("Charge") or 0
 
+        -- Aplica multiplicador de rebirth ao dano
+        local profile = player:FindFirstChild("PlayerProfile")
+        local dmgMult = 1
+        if profile and profile:FindFirstChild("DamageMultiplier") then
+            dmgMult = profile.DamageMultiplier.Value
+        end
+        damage = math.floor(damage * dmgMult)
+
         -- Aplica dano
         humanoid:TakeDamage(damage)
 
@@ -183,6 +191,12 @@ local function setupBallCollision(ball, player)
             -- Notifica kill
             if Remotes:FindFirstChild("MobKilled") then
                 Remotes.MobKilled:FireClient(player, mobName, reward)
+            end
+
+            -- Registra no Indice Brainrot
+            local indexBindable = ReplicatedStorage:FindFirstChild("IndexMobKill")
+            if indexBindable then
+                indexBindable:Fire(player, mobName)
             end
         end
 

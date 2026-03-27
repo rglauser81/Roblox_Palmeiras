@@ -61,4 +61,14 @@ makeEvent("MinigameStart")      -- server -> client : (mgId, name, desc, duratio
 makeEvent("MinigameEnd")        -- server -> client : (mgId, reward, score)
 makeEvent("MinigameProgress")   -- server -> client : (mgId, score)
 
+-- ── REBIRTH ────────────────────────────────────────────────
+makeFunction("DoRebirth")       -- client -> server : () -> (ok, msg)
+makeFunction("GetRebirthInfo")  -- client -> server : () -> (infoTable)
+makeEvent("RebirthDone")        -- server -> client : (rebirths, mult, nextCost)
+
+-- ── INDICE BRAINROT ────────────────────────────────────────
+makeFunction("GetBrainrotIndex") -- client -> server : () -> (indexTable)
+makeEvent("IndexTierUp")        -- server -> client : (mobName, tierName, tierColor, reward, kills)
+makeEvent("OpenMainMenu")       -- server -> client : (tab) / client uses to toggle menu
+
 print("[Remotes] Todas as remotas criadas:", #remotesFolder:GetChildren())
