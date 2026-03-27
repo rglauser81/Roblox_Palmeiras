@@ -22,82 +22,67 @@ hud.ResetOnSpawn   = false
 hud.IgnoreGuiInset = true
 hud.Parent         = playerGui
 
--- ── Painel superior esquerdo (rodada + andar) ──────────────
+-- Helper: text stroke
+local function addTextStroke(label, color, thickness)
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = color or Color3.fromRGB(0, 0, 0)
+    stroke.Thickness = thickness or 2
+    stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+    stroke.Parent = label
+end
+
+-- ── Painel superior direito (rodada + local) ──────────────
 local topLeft = Instance.new("Frame")
-topLeft.Size              = UDim2.new(0, 220, 0, 90)
-topLeft.Position          = UDim2.new(0, 14, 0, 14)
+topLeft.Size              = UDim2.new(0, 240, 0, 80)
+topLeft.Position          = UDim2.new(1, -254, 0, 14)
 topLeft.BackgroundColor3  = Color3.fromRGB(15, 15, 20)
 topLeft.BackgroundTransparency = 0.3
 topLeft.BorderSizePixel   = 0
 topLeft.Parent            = hud
-Instance.new("UICorner", topLeft).CornerRadius = UDim.new(0, 12)
+Instance.new("UICorner", topLeft).CornerRadius = UDim.new(0, 14)
+local tlStroke = Instance.new("UIStroke", topLeft)
+tlStroke.Color = Color3.fromRGB(60, 60, 80)
+tlStroke.Thickness = 2
 
 local roundLabel = Instance.new("TextLabel")
 roundLabel.Name             = "RoundLabel"
-roundLabel.Size             = UDim2.new(1, -10, 0, 36)
+roundLabel.Size             = UDim2.new(1, -12, 0, 36)
 roundLabel.Position         = UDim2.new(0, 8, 0, 4)
 roundLabel.BackgroundTransparency = 1
 roundLabel.Text             = "🌊 Rodada 1"
 roundLabel.TextColor3       = Color3.fromRGB(255, 200, 0)
-roundLabel.Font             = Enum.Font.GothamBold
+roundLabel.Font             = Enum.Font.FredokaOne
 roundLabel.TextSize         = 22
 roundLabel.TextXAlignment   = Enum.TextXAlignment.Left
 roundLabel.Parent           = topLeft
+addTextStroke(roundLabel, Color3.fromRGB(80, 60, 0), 2)
 
 local floorLabel = Instance.new("TextLabel")
 floorLabel.Name             = "FloorLabel"
-floorLabel.Size             = UDim2.new(1, -10, 0, 28)
-floorLabel.Position         = UDim2.new(0, 8, 0, 44)
+floorLabel.Size             = UDim2.new(1, -12, 0, 28)
+floorLabel.Position         = UDim2.new(0, 8, 0, 40)
 floorLabel.BackgroundTransparency = 1
-floorLabel.Text             = "🏟️ Piso da Arquibancada"
-floorLabel.TextColor3       = Color3.fromRGB(200, 200, 200)
-floorLabel.Font             = Enum.Font.Gotham
-floorLabel.TextSize         = 15
+floorLabel.Text             = "🏟️ Estadio Brainrot"
+floorLabel.TextColor3       = Color3.fromRGB(200, 200, 220)
+floorLabel.Font             = Enum.Font.FredokaOne
+floorLabel.TextSize         = 14
 floorLabel.TextXAlignment   = Enum.TextXAlignment.Left
 floorLabel.Parent           = topLeft
+addTextStroke(floorLabel, Color3.fromRGB(0, 0, 0), 1)
 
--- ── Painel superior direito (kills + coins) ────────────────
-local topRight = Instance.new("Frame")
-topRight.Size              = UDim2.new(0, 190, 0, 90)
-topRight.Position          = UDim2.new(1, -204, 0, 14)
-topRight.BackgroundColor3  = Color3.fromRGB(15, 15, 20)
-topRight.BackgroundTransparency = 0.3
-topRight.BorderSizePixel   = 0
-topRight.Parent            = hud
-Instance.new("UICorner", topRight).CornerRadius = UDim.new(0, 12)
-
-local killsLabel = Instance.new("TextLabel")
-killsLabel.Name             = "KillsLabel"
-killsLabel.Size             = UDim2.new(1, -10, 0, 36)
-killsLabel.Position         = UDim2.new(0, 8, 0, 4)
-killsLabel.BackgroundTransparency = 1
-killsLabel.Text             = "⚔️ Kills: 0"
-killsLabel.TextColor3       = Color3.fromRGB(255, 80, 80)
-killsLabel.Font             = Enum.Font.GothamBold
-killsLabel.TextSize         = 20
-killsLabel.TextXAlignment   = Enum.TextXAlignment.Left
-killsLabel.Parent           = topRight
-
-local coinsLabel = Instance.new("TextLabel")
-coinsLabel.Name             = "CoinsLabel"
-coinsLabel.Size             = UDim2.new(1, -10, 0, 28)
-coinsLabel.Position         = UDim2.new(0, 8, 0, 44)
-coinsLabel.BackgroundTransparency = 1
-coinsLabel.Text             = "💰 Coins: 0"
-coinsLabel.TextColor3       = Color3.fromRGB(255, 215, 0)
-coinsLabel.Font             = Enum.Font.GothamBold
-coinsLabel.TextSize         = 17
-coinsLabel.TextXAlignment   = Enum.TextXAlignment.Left
-coinsLabel.Parent           = topRight
+-- (Kills/Coins removidos - agora no MainMenuClient)
 
 -- ── Barra de HP do player ──────────────────────────────────
 local hpBarBg = Instance.new("Frame")
-hpBarBg.Size              = UDim2.new(0, 300, 0, 20)
-hpBarBg.Position          = UDim2.new(0.5, -150, 1, -44)
-hpBarBg.BackgroundColor3  = Color3.fromRGB(40, 10, 10)
+hpBarBg.Size              = UDim2.new(0, 340, 0, 26)
+hpBarBg.Position          = UDim2.new(0.5, -170, 1, -42)
+hpBarBg.BackgroundColor3  = Color3.fromRGB(30, 10, 10)
 hpBarBg.BorderSizePixel   = 0
 hpBarBg.Parent            = hud
-Instance.new("UICorner", hpBarBg).CornerRadius = UDim.new(0, 10)
+Instance.new("UICorner", hpBarBg).CornerRadius = UDim.new(0, 12)
+local hpBgStroke = Instance.new("UIStroke", hpBarBg)
+hpBgStroke.Color = Color3.fromRGB(0, 0, 0)
+hpBgStroke.Thickness = 3
 
 local hpBar = Instance.new("Frame")
 hpBar.Name               = "HpBar"
@@ -105,16 +90,17 @@ hpBar.Size               = UDim2.new(1, 0, 1, 0)
 hpBar.BackgroundColor3   = Color3.fromRGB(220, 50, 50)
 hpBar.BorderSizePixel    = 0
 hpBar.Parent             = hpBarBg
-Instance.new("UICorner", hpBar).CornerRadius = UDim.new(0, 10)
+Instance.new("UICorner", hpBar).CornerRadius = UDim.new(0, 12)
 
 local hpLabel = Instance.new("TextLabel")
 hpLabel.Size              = UDim2.new(1, 0, 1, 0)
 hpLabel.BackgroundTransparency = 1
 hpLabel.Text              = "❤️ 100 / 100"
 hpLabel.TextColor3        = Color3.fromRGB(255, 255, 255)
-hpLabel.Font              = Enum.Font.GothamBold
-hpLabel.TextSize          = 13
+hpLabel.Font              = Enum.Font.FredokaOne
+hpLabel.TextSize          = 14
 hpLabel.Parent            = hpBarBg
+addTextStroke(hpLabel, Color3.fromRGB(0, 0, 0), 2)
 
 -- ── Kill Feed (baixo direito) ──────────────────────────────
 local killFeed = Instance.new("Frame")
@@ -132,30 +118,35 @@ killFeedLayout.Parent      = killFeed
 -- ── Anúncio Global (centro) ───────────────────────────────
 local announceLabel = Instance.new("TextLabel")
 announceLabel.Name             = "Announce"
-announceLabel.Size             = UDim2.new(0, 600, 0, 56)
-announceLabel.Position         = UDim2.new(0.5, -300, 0, 80)
-announceLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-announceLabel.BackgroundTransparency = 0.25
+announceLabel.Size             = UDim2.new(0, 600, 0, 60)
+announceLabel.Position         = UDim2.new(0.5, -300, 0, 60)
+announceLabel.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+announceLabel.BackgroundTransparency = 0.2
 announceLabel.Text             = ""
 announceLabel.TextColor3       = Color3.fromRGB(255, 200, 0)
-announceLabel.Font             = Enum.Font.GothamBold
-announceLabel.TextSize         = 24
+announceLabel.Font             = Enum.Font.FredokaOne
+announceLabel.TextSize         = 26
 announceLabel.Visible          = false
 announceLabel.Parent           = hud
-Instance.new("UICorner", announceLabel).CornerRadius = UDim.new(0, 12)
+Instance.new("UICorner", announceLabel).CornerRadius = UDim.new(0, 14)
+local annStroke = Instance.new("UIStroke", announceLabel)
+annStroke.Color = Color3.fromRGB(80, 60, 0)
+annStroke.Thickness = 3
+addTextStroke(announceLabel, Color3.fromRGB(0, 0, 0), 2)
 
 -- ── Contador de intermission (centro baixo) ────────────────
 local intermissionLabel = Instance.new("TextLabel")
 intermissionLabel.Name             = "Intermission"
-intermissionLabel.Size             = UDim2.new(0, 300, 0, 44)
-intermissionLabel.Position         = UDim2.new(0.5, -150, 0, 144)
+intermissionLabel.Size             = UDim2.new(0, 320, 0, 44)
+intermissionLabel.Position         = UDim2.new(0.5, -160, 0, 128)
 intermissionLabel.BackgroundTransparency = 1
 intermissionLabel.Text             = ""
-intermissionLabel.TextColor3       = Color3.fromRGB(200, 200, 200)
-intermissionLabel.Font             = Enum.Font.GothamBold
-intermissionLabel.TextSize         = 20
+intermissionLabel.TextColor3       = Color3.fromRGB(220, 220, 230)
+intermissionLabel.Font             = Enum.Font.FredokaOne
+intermissionLabel.TextSize         = 22
 intermissionLabel.Visible          = false
 intermissionLabel.Parent           = hud
+addTextStroke(intermissionLabel, Color3.fromRGB(0, 0, 0), 2)
 
 -- ============================================================
 -- Lógica de atualização
@@ -187,8 +178,9 @@ local function addKillFeedEntry(mobName, coins)
     label.BackgroundTransparency = 0.35
     label.Text              = "💀 " .. mobName .. "  +" .. coins .. "💰"
     label.TextColor3        = Color3.fromRGB(255, 120, 80)
-    label.Font              = Enum.Font.GothamBold
+    label.Font              = Enum.Font.FredokaOne
     label.TextSize          = 14
+    addTextStroke(label, Color3.fromRGB(0, 0, 0), 1)
     label.TextXAlignment    = Enum.TextXAlignment.Right
     label.Parent            = killFeed
     Instance.new("UICorner", label).CornerRadius = UDim.new(0, 6)
@@ -219,23 +211,8 @@ local function updateHpBar(character)
     end)
 end
 
--- Atualiza kills e coins do leaderstats
-local function bindLeaderstats()
-    local ls = localPlayer:WaitForChild("leaderstats", 10)
-    if not ls then return end
-
-    local kills = ls:WaitForChild("Kills", 5)
-    local coins = ls:WaitForChild("Coins", 5)
-
-    if kills then
-        killsLabel.Text = "⚔️ Kills: " .. kills.Value
-        kills.Changed:Connect(function(v) killsLabel.Text = "⚔️ Kills: " .. v end)
-    end
-    if coins then
-        coinsLabel.Text = "💰 Coins: " .. coins.Value
-        coins.Changed:Connect(function(v) coinsLabel.Text = "💰 Coins: " .. v end)
-    end
-end
+-- (bindLeaderstats removido - stats agora no MainMenuClient)
+local function bindLeaderstats() end
 
 -- Mostra nome do estadio (layout unico)
 local function updateFloorLabel(_character)
