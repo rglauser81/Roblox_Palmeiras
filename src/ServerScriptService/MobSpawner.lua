@@ -10,11 +10,26 @@ local activeMobs = {}
 
 -- Tabela de mobs disponíveis no jogo (referencia nomes de modelos em ReplicatedStorage.Mobs)
 local MOB_POOL = {
-    { name = "Tralalero",    weight = 40, baseHp = 100, speed = 16 },
-    { name = "BombardinoCoccodrillo", weight = 25, baseHp = 200, speed = 12 },
-    { name = "TungTungSahur", weight = 20, baseHp = 150, speed = 18 },
-    { name = "CappuccinoAssassino", weight = 10, baseHp = 400, speed = 10 },
-    { name = "Lirili Larila", weight = 5, baseHp = 1000, speed = 8 },
+    -- Comum (total weight ~50)
+    { name = "Tralalero",         weight = 18, baseHp = 100, speed = 16 },
+    { name = "BonecaAmbalabu",    weight = 14, baseHp = 80,  speed = 18 },
+    { name = "FrigoCamelo",       weight = 12, baseHp = 120, speed = 14 },
+    { name = "SalminoPinguino",   weight = 10, baseHp = 90,  speed = 20 },
+    -- Incomum (total weight ~28)
+    { name = "BombardinoCoccodrillo", weight = 8, baseHp = 200, speed = 12 },
+    { name = "TungTungSahur",     weight = 7, baseHp = 150, speed = 18 },
+    { name = "ChimpanziniBananini", weight = 7, baseHp = 180, speed = 16 },
+    { name = "BallerinaCappuccina", weight = 6, baseHp = 160, speed = 14 },
+    -- Raro (total weight ~12)
+    { name = "CappuccinoAssassino", weight = 4, baseHp = 400, speed = 10 },
+    { name = "GlorboFruttodrillo",  weight = 4, baseHp = 350, speed = 11 },
+    { name = "LaVacaSaturno",       weight = 4, baseHp = 500, speed = 8 },
+    -- Epico (total weight ~6)
+    { name = "LiriliLarila",      weight = 2, baseHp = 800,  speed = 8 },
+    { name = "TrippiTroppi",      weight = 2, baseHp = 700,  speed = 10 },
+    { name = "BobritoFrittomisto", weight = 2, baseHp = 1000, speed = 7 },
+    -- Lendario (boss - spawna separado mas pode aparecer em rodadas altas)
+    { name = "BrioBranta",        weight = 1, baseHp = 2000, speed = 6 },
 }
 
 local waveComplete = Instance.new("BindableEvent")
