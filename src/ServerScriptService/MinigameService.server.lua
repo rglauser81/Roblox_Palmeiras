@@ -137,22 +137,91 @@ local function startPenaltyShootout(player, mgConfig)
     local goalH = 5
     local goalX = origin.X + 12
     local goalZ = origin.Z
+    local fieldY = GameConfig.STADIUM.FIELD_Y
 
-    makePart(folder, "PostL", Vector3.new(0.5, goalH, 0.5), CFrame.new(goalX, GameConfig.STADIUM.FIELD_Y + goalH/2, goalZ - goalW/2), "White", Enum.Material.Metal)
-    makePart(folder, "PostR", Vector3.new(0.5, goalH, 0.5), CFrame.new(goalX, GameConfig.STADIUM.FIELD_Y + goalH/2, goalZ + goalW/2), "White", Enum.Material.Metal)
-    makePart(folder, "Bar", Vector3.new(0.5, 0.5, goalW), CFrame.new(goalX, GameConfig.STADIUM.FIELD_Y + goalH, goalZ), "White", Enum.Material.Metal)
+    makePart(folder, "PostL", Vector3.new(0.5, goalH, 0.5), CFrame.new(goalX, fieldY + goalH/2, goalZ - goalW/2), "White", Enum.Material.Metal)
+    makePart(folder, "PostR", Vector3.new(0.5, goalH, 0.5), CFrame.new(goalX, fieldY + goalH/2, goalZ + goalW/2), "White", Enum.Material.Metal)
+    makePart(folder, "Bar", Vector3.new(0.5, 0.5, goalW), CFrame.new(goalX, fieldY + goalH, goalZ), "White", Enum.Material.Metal)
 
-    -- Goleiro (parte movel)
+    -- Rede visual (fundo do gol)
+    local net = makePart(folder, "Net", Vector3.new(0.3, goalH - 0.5, goalW - 0.5),
+        CFrame.new(goalX + 0.5, fieldY + goalH/2, goalZ), "White", Enum.Material.ForceField)
+    net.Transparency = 0.6
+    net.CanCollide = false
+
+    -- Marca do penalti no chao (circulo branco)
+    local penaltySpotPos = Vector3.new(origin.X, fieldY + 0.05, goalZ)
+    local spotMark = Instance.new("Part")
+    spotMark.Name = "PenaltySpot"
+    spotMark.Shape = Enum.PartType.Cylinder
+    spotMark.Size = Vector3.new(0.1, 3, 3)
+    spotMark.CFrame = CFrame.new(penaltySpotPos) * CFrame.Angles(0, 0, math.rad(90))
+    spotMark.BrickColor = BrickColor.new("Institutional white")
+    spotMark.Material = Enum.Material.Neon
+    spotMark.Anchored = true
+    spotMark.CanCollide = false
+    spotMark.Parent = folder
+
+    -- Bola visivel no ponto de penalti
+    local function spawnPenaltyBall()
+        local existing = folder:FindFirstChild("PenaltyBall")
+        if existing then existing:Destroy() end
+
+        local pBall = Instance.new("Part")
+        pBall.Name = "PenaltyBall"
+        pBall.Shape = Enum.PartType.Ball
+        pBall.Size = Vector3.new(FB.BALL_SIZE, FB.BALL_SIZE, FB.BALL_SIZE)
+        pBall.BrickColor = BrickColor.new("Institutional white")
+        pBall.Material = Enum.Material.SmoothPlastic
+        pBall.CFrame = CFrame.new(penaltySpotPos + Vector3.new(0, FB.BALL_SIZE / 2, 0))
+        pBall.Anchored = true
+        pBall.CanCollide = false
+        pBall.Parent = folder
+
+        -- Decal para textura de bola
+        local decal = Instance.new("Decal")
+        decal.Color3 = Color3.fromRGB(30, 30, 30)
+        decal.Face = Enum.NormalId.Front
+        decal.Parent = pBall
+
+        -- Highlight pulsante para chamar atencao
+        local highlight = Instance.new("Highlight")
+        highlight.FillColor = Color3.fromRGB(255, 255, 200)
+        highlight.FillTransparency = 0.7
+        highlight.OutlineColor = Color3.fromRGB(255, 215, 0)
+        highlight.OutlineTransparency = 0
+        highlight.Parent = pBall
+
+        return pBall
+    end
+
+    spawnPenaltyBall()
+
+    -- Teleporta o jogador para posicao de penalti olhando pro gol
+    local hrp = char:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        local kickPos = Vector3.new(origin.X - 3, fieldY + 3, goalZ)
+        local lookAt = Vector3.new(goalX, fieldY + 2, goalZ)
+        hrp.CFrame = CFrame.new(kickPos, lookAt)
+    end
+
+    -- Goleiro (parte movel com visual melhorado)
     local keeper = makePart(folder, "Keeper",
         Vector3.new(2, 4, 2),
-        CFrame.new(goalX - 1, GameConfig.STADIUM.FIELD_Y + 2, goalZ),
+        CFrame.new(goalX - 1, fieldY + 2, goalZ),
         "Bright green")
+    -- Destaque no goleiro
+    local keeperHL = Instance.new("Highlight")
+    keeperHL.FillColor = Color3.fromRGB(0, 255, 0)
+    keeperHL.FillTransparency = 0.8
+    keeperHL.OutlineColor = Color3.fromRGB(0, 200, 0)
+    keeperHL.Parent = keeper
 
     -- Trigger de gol
     local goalTrigger = Instance.new("Part")
     goalTrigger.Name = "GoalTrigger"
     goalTrigger.Size = Vector3.new(2, goalH, goalW - 1)
-    goalTrigger.CFrame = CFrame.new(goalX, GameConfig.STADIUM.FIELD_Y + goalH/2, goalZ)
+    goalTrigger.CFrame = CFrame.new(goalX, fieldY + goalH/2, goalZ)
     goalTrigger.Transparency = 1
     goalTrigger.CanCollide = false
     goalTrigger.Anchored = true
@@ -165,11 +234,12 @@ local function startPenaltyShootout(player, mgConfig)
     -- Goleiro se move
     local keeperConn
     local keeperDir = 1
+    local keeperSpeed = FB.KEEPER_BASE_SPEED or 8
     keeperConn = game:GetService("RunService").Heartbeat:Connect(function(dt)
         if tick() > endTime then keeperConn:Disconnect(); return end
-        local kz = keeper.Position.Z + keeperDir * 8 * dt
+        local kz = keeper.Position.Z + keeperDir * keeperSpeed * dt
         if math.abs(kz - goalZ) > goalW/2 - 1.5 then keeperDir = -keeperDir end
-        keeper.CFrame = CFrame.new(goalX - 1, GameConfig.STADIUM.FIELD_Y + 2, kz)
+        keeper.CFrame = CFrame.new(goalX - 1, fieldY + 2, kz)
     end)
 
     -- Detecta bolas que entram no gol
@@ -180,12 +250,34 @@ local function startPenaltyShootout(player, mgConfig)
                 goals += 1
                 hit:Destroy()
                 Remotes.MinigameProgress:FireClient(player, mgConfig.id, goals)
+                -- Reposiciona a bola de penalti apos gol
+                task.delay(0.5, function()
+                    if folder.Parent and tick() < endTime then
+                        spawnPenaltyBall()
+                    end
+                end)
             end
+        end
+    end)
+
+    -- Remove bola visual quando jogador chuta (bola real substitui)
+    local kickConn
+    kickConn = Remotes.KickBall.OnServerEvent:Connect(function(kicker)
+        if kicker == player then
+            local pBall = folder:FindFirstChild("PenaltyBall")
+            if pBall then pBall:Destroy() end
+            -- Respawn a bola apos um tempo se nao fez gol
+            task.delay(FB.BALL_LIFETIME + 0.5, function()
+                if folder.Parent and tick() < endTime and not folder:FindFirstChild("PenaltyBall") then
+                    spawnPenaltyBall()
+                end
+            end)
         end
     end)
 
     task.delay(mgConfig.duration, function()
         keeperConn:Disconnect()
+        if kickConn then kickConn:Disconnect() end
         folder:Destroy()
         activePlayers[player.UserId] = nil
 
