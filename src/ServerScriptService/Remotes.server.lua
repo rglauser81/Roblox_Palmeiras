@@ -55,4 +55,10 @@ makeEvent("GoalChallengeStart") -- server -> client : (duration)
 makeEvent("GoalChallengeEnd")   -- server -> client : (totalGoals, totalCoins)
 makeEvent("BallHitMob")         -- server -> client : (mobName, damage)
 
+-- ── MINI-GAMES ─────────────────────────────────────────────
+makeEvent("MinigameJoin")       -- client -> server : (mgId)
+makeEvent("MinigameStart")      -- server -> client : (mgId, name, desc, duration, reward)
+makeEvent("MinigameEnd")        -- server -> client : (mgId, reward, score)
+makeEvent("MinigameProgress")   -- server -> client : (mgId, score)
+
 print("[Remotes] Todas as remotas criadas:", #remotesFolder:GetChildren())

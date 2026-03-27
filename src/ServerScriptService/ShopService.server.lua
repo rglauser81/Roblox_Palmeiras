@@ -246,15 +246,12 @@ end
 -- Conecta RemoteFunctions quando Remotes estiver pronto
 -- ============================================================
 
-task.spawn(function()
-    local remotes = getRemotes()
+-- Conecta RemoteFunctions de forma sincrona (sem task.spawn para evitar race condition)
+local remotes = getRemotes()
+local buyFunc     = remotes:WaitForChild("BuyItem", 30)
+local unlockFunc  = remotes:WaitForChild("UnlockFloor", 30)
 
-    -- Aguarda criação das remotas pelo Remotes.server.lua
-    local buyFunc     = remotes:WaitForChild("BuyItem", 10)
-    local unlockFunc  = remotes:WaitForChild("UnlockFloor", 10)
-
-    if buyFunc    then buyFunc.OnServerInvoke    = onBuyItem    end
-    if unlockFunc then unlockFunc.OnServerInvoke = onUnlockFloor end
-end)
+if buyFunc    then buyFunc.OnServerInvoke    = onBuyItem    end
+if unlockFunc then unlockFunc.OnServerInvoke = onUnlockFloor end
 
 print("[ShopService] Inicializado.")

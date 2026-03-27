@@ -234,9 +234,9 @@ local function onKickBall(player, direction, charge)
     local ball = createBall(spawnPos, direction, charge, player)
     setupBallCollision(ball, player)
 
-    -- SFX: som de chute (placeholder - seria um Sound)
+    -- SFX: som de chute
     local kickSound = Instance.new("Sound")
-    kickSound.SoundId = "rbxassetid://9114190709" -- som genérico de chute
+    kickSound.SoundId = "rbxassetid://5153734236" -- som de chute
     kickSound.Volume = 0.5
     kickSound.Parent = rootPart
     kickSound:Play()

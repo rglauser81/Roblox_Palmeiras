@@ -1,153 +1,187 @@
 -- GameConfig.lua
--- Configuração central do Allianz Brainrot Arena
--- ⚙️ Edite aqui para personalizar o jogo
+-- Configuracao central do Brainrot Football Stadium
+-- Estrutura: 1 campo grande + arquibancadas + mini-games espalhados
 
 local GameConfig = {}
 
 -- ============================================================
--- 👑 NATHAN — CRIADOR DO JOGO
+-- NATHAN — CRIADOR DO JOGO
 -- ============================================================
--- Coloque o UserId do Nathan aqui (número, ex: 123456789)
--- Se deixar 0, o PRIMEIRO jogador a entrar vira Nathan (modo teste)
 GameConfig.NATHAN_USER_ID = 1774574751189
-
--- Nome exibido na tag do criador
 GameConfig.NATHAN_DISPLAY_NAME = "NathanGaimer42"
 
 -- ============================================================
--- 🏟️ ALLIANZ ARENA — ANDARES
+-- ESTADIO — Layout unico (sem andares multiplos)
 -- ============================================================
+GameConfig.STADIUM = {
+    FIELD_LENGTH   = 160,   -- comprimento do campo (X)
+    FIELD_WIDTH    = 100,   -- largura do campo (Z)
+    FIELD_Y        = 0,     -- altura do gramado
+    STAND_HEIGHT   = 20,    -- altura das arquibancadas
+    STAND_ROWS     = 5,     -- fileiras de assentos
+}
+
+-- Mantém FLOORS para compatibilidade (1 andar só)
 GameConfig.FLOORS = {
     {
         id = 1,
-        name = "Piso da Arquibancada",
+        name = "Estadio Brainrot",
         theme = "Stadium",
-        unlockPrice = 0,       -- gratuito
+        unlockPrice = 0,
         spawnHeight = 0,
         color = Color3.fromRGB(34, 139, 34),
-    },
-    {
-        id = 2,
-        name = "Corredor da Fama",
-        theme = "Hallway",
-        unlockPrice = 500,
-        spawnHeight = 30,
-        color = Color3.fromRGB(255, 165, 0),
-    },
-    {
-        id = 3,
-        name = "Camarote VIP",
-        theme = "VIP",
-        unlockPrice = 2000,
-        spawnHeight = 60,
-        color = Color3.fromRGB(148, 0, 211),
-    },
-    {
-        id = 4,
-        name = "Cobertura Lendária",
-        theme = "Legendary",
-        unlockPrice = 8000,
-        spawnHeight = 90,
-        color = Color3.fromRGB(255, 215, 0),
     },
 }
 
 -- ============================================================
--- 🌊 ONDAS
+-- ONDAS — mobs invadem o campo 
 -- ============================================================
-GameConfig.INTERMISSION_TIME       = 22  -- inclui o desafio de gol (18s) + pausa
+GameConfig.INTERMISSION_TIME       = 25
 GameConfig.BASE_MOBS_PER_WAVE      = 5
 GameConfig.MOBS_INCREMENT          = 3
-GameConfig.MOBS_INCREMENT_PER_ROUND = GameConfig.MOBS_INCREMENT  -- alias
+GameConfig.MOBS_INCREMENT_PER_ROUND = GameConfig.MOBS_INCREMENT
 GameConfig.HP_SCALE_PER_ROUND      = 0.2
 GameConfig.MAX_DIFFICULTY_ROUND    = 50
 
 -- ============================================================
--- 💰 ECONOMIA
+-- ECONOMIA
 -- ============================================================
 GameConfig.COINS_PER_KILL           = 10
 GameConfig.RARE_MOB_COIN_MULTIPLIER = 5
 
 -- ============================================================
--- 🛍️ LOJA
+-- LOJA
 -- ============================================================
 GameConfig.SHOP_ITEMS = {
-    -- Armas (Bolas)
-    { id = "ball_basic",     name = "Bola Clássica ⚽",    price = 0,    category = "weapon",  damage = 20, description = "Chute básico. Já vem com você!" },
-    { id = "ball_fire",      name = "Bola de Fogo 🔥",     price = 400,  category = "weapon",  damage = 60, description = "Explode no impacto! AoE de 12 studs" },
-    { id = "ball_golden",    name = "Bola Dourada ⭐",      price = 1200, category = "weapon",  damage = 45, description = "+3x coins por kill com esta bola" },
-    { id = "ball_ice",       name = "Bola de Gelo ❄️",     price = 600,  category = "weapon",  damage = 35, description = "Congela mobs por 3s no impacto" },
-    { id = "ball_thunder",   name = "Bola Trovão ⚡",      price = 2000, category = "weapon",  damage = 100, description = "Raio em cadeia! Atinge até 4 mobs" },
+    -- Bolas
+    { id = "ball_basic",     name = "Bola Classica",       price = 0,    category = "weapon",  damage = 20, description = "Chute basico. Ja vem com voce!" },
+    { id = "ball_fire",      name = "Bola de Fogo",        price = 400,  category = "weapon",  damage = 60, description = "Explode no impacto! AoE de 12 studs" },
+    { id = "ball_golden",    name = "Bola Dourada",        price = 1200, category = "weapon",  damage = 45, description = "+3x coins por kill com esta bola" },
+    { id = "ball_ice",       name = "Bola de Gelo",        price = 600,  category = "weapon",  damage = 35, description = "Congela mobs por 3s no impacto" },
+    { id = "ball_thunder",   name = "Bola Trovao",         price = 2000, category = "weapon",  damage = 100, description = "Raio em cadeia! Atinge ate 4 mobs" },
 
     -- Boosts
     { id = "boost_speed",    name = "Turbo Brainrot",      price = 100,  category = "boost",   duration = 30, description = "+50% velocidade por 30s" },
-    { id = "boost_shield",   name = "Escudo Temporário",   price = 150,  category = "boost",   duration = 20, description = "Bloqueia próximo dano" },
-    { id = "boost_magnet",   name = "Ímã de Coins",        price = 200,  category = "boost",   duration = 60, description = "+3x coins por kill por 60s" },
-    { id = "boot_turbo",     name = "Chuteira Turbo ⚡",   price = 250,  category = "boost",   duration = 60, description = "Chuta 2x mais rápido por 60s" },
-    { id = "boot_curve",     name = "Chuteira Curva 🌀",   price = 500,  category = "boost",   duration = 45, description = "Bolas rastreiam o mob mais próximo" },
+    { id = "boost_shield",   name = "Escudo Temporario",   price = 150,  category = "boost",   duration = 20, description = "Bloqueia proximo dano" },
+    { id = "boost_magnet",   name = "Ima de Coins",        price = 200,  category = "boost",   duration = 60, description = "+3x coins por kill por 60s" },
+    { id = "boot_turbo",     name = "Chuteira Turbo",      price = 250,  category = "boost",   duration = 60, description = "Chuta 2x mais rapido por 60s" },
+    { id = "boot_curve",     name = "Chuteira Curva",      price = 500,  category = "boost",   duration = 45, description = "Bolas rastreiam o mob mais proximo" },
 
-    -- Cosméticos
+    -- Cosmeticos
     { id = "skin_tralalero", name = "Skin Tralalero",      price = 500,  category = "cosmetic", description = "Anda igual ao Tralalero" },
-    { id = "skin_bombardino",name = "Skin Bombardino",     price = 750,  category = "cosmetic", description = "Você virou o Coccodrillo" },
-    { id = "trail_soccer",   name = "Rastro de Gramado 🌿",price = 400,  category = "cosmetic", description = "Deixa rastro verde por onde anda" },
-    { id = "aura_rainbow",   name = "Aura Arco-Íris",      price = 2000, category = "cosmetic", description = "Aura animada multicolorida" },
+    { id = "skin_bombardino",name = "Skin Bombardino",     price = 750,  category = "cosmetic", description = "Voce virou o Coccodrillo" },
+    { id = "trail_soccer",   name = "Rastro de Gramado",   price = 400,  category = "cosmetic", description = "Deixa rastro verde por onde anda" },
+    { id = "aura_rainbow",   name = "Aura Arco-Iris",      price = 2000, category = "cosmetic", description = "Aura animada multicolorida" },
     { id = "aura_gold",      name = "Aura Dourada",         price = 3000, category = "cosmetic", description = "Exclusiva dos ricos" },
 }
 
 -- ============================================================
--- ⚡ PODERES ESPECIAIS DO NATHAN (comandos de chat)
+-- PODERES DO NATHAN
 -- ============================================================
 GameConfig.NATHAN_COMMANDS = {
-    "/chuva"   -- Chuva de coins em todos os jogadores
-    ,"/divino"  -- Mata todos os mobs do mapa
-    ,"/boost"   -- Dá boost de velocidade global por 60s
-    ,"/evento"  -- Ativa rodada de evento especial
+    "/chuva", "/divino", "/boost", "/evento",
 }
-
--- ============================================================
--- 🎨 VISUAIS DO NATHAN
--- ============================================================
-GameConfig.NATHAN_AURA_COLOR   = Color3.fromRGB(255, 200, 0)  -- dourado
-GameConfig.NATHAN_AURA_SPEED   = 2                             -- rotações/s
+GameConfig.NATHAN_AURA_COLOR   = Color3.fromRGB(255, 200, 0)
+GameConfig.NATHAN_AURA_SPEED   = 2
 GameConfig.NATHAN_LIGHT_RANGE  = 20
 GameConfig.NATHAN_LIGHT_BRIGHT = 1.5
 
 -- ============================================================
--- ⚽ FUTEBOL — Sistema de Chute + Desafio de Gol
+-- FUTEBOL — Sistema de Chute + Desafio de Gol
 -- ============================================================
 GameConfig.FOOTBALL = {
-    -- Bola
-    BALL_SPEED          = 130,     -- velocidade base da bola (studs/s)
-    BALL_MAX_SPEED      = 240,     -- velocidade com carga máxima
-    BALL_BASE_DAMAGE    = 20,      -- dano do chute rápido
-    BALL_MAX_DAMAGE     = 80,      -- dano do chute carregado
-    BALL_LIFETIME       = 4,       -- segundos antes de sumir
-    BALL_SIZE           = 2.4,     -- tamanho da bola (diâmetro)
-    BALL_BOUNCE_COUNT   = 3,       -- quicar até N vezes nas paredes
+    BALL_SPEED          = 130,
+    BALL_MAX_SPEED      = 240,
+    BALL_BASE_DAMAGE    = 20,
+    BALL_MAX_DAMAGE     = 80,
+    BALL_LIFETIME       = 4,
+    BALL_SIZE           = 2.4,
+    BALL_BOUNCE_COUNT   = 3,
 
-    -- Chute
-    KICK_COOLDOWN       = 0.7,     -- cooldown entre chutes (s)
-    CHARGE_TIME         = 1.2,     -- tempo para carga máxima (s)
+    KICK_COOLDOWN       = 0.7,
+    CHARGE_TIME         = 1.2,
 
-    -- Desafio de Gol (intermission)
-    GOAL_CHALLENGE_DURATION = 18,  -- duração do desafio (s)
-    GOAL_COINS_BASE     = 50,      -- coins por gol
-    GOAL_COMBO_MULT     = 1.5,     -- multiplicador por gol consecutivo
-    KEEPER_BASE_SPEED   = 14,      -- velocidade do goleiro
-    KEEPER_SPEED_SCALE  = 1.5,     -- aumento por rodada
+    GOAL_CHALLENGE_DURATION = 18,
+    GOAL_COINS_BASE     = 50,
+    GOAL_COMBO_MULT     = 1.5,
+    KEEPER_BASE_SPEED   = 14,
+    KEEPER_SPEED_SCALE  = 1.5,
 
-    -- Bola especial: Fogo
-    FIRE_BALL_AOE       = 12,      -- raio da explosão
-    FIRE_BALL_DAMAGE    = 60,      -- dano da explosão
-
-    -- Bola especial: Dourada
-    GOLDEN_COIN_MULT    = 3,       -- multiplicador de coins
+    FIRE_BALL_AOE       = 12,
+    FIRE_BALL_DAMAGE    = 60,
+    GOLDEN_COIN_MULT    = 3,
 }
 
 -- ============================================================
--- 🏆 LEADERBOARD
+-- MINI-GAMES INTERATIVOS (espalhados pelo estadio)
+-- ============================================================
+GameConfig.MINIGAMES = {
+    {
+        id = "dribble_course",
+        name = "Pista de Dribles",
+        description = "Desvie dos cones brainrot!",
+        duration = 15,
+        reward = 80,
+        position = Vector3.new(-55, 0, 35),
+    },
+    {
+        id = "penalty_shootout",
+        name = "Cobranca de Penalti",
+        description = "Marque gols contra o goleiro!",
+        duration = 20,
+        reward = 100,
+        position = Vector3.new(55, 0, -35),
+    },
+    {
+        id = "keepy_uppy",
+        name = "Embaixadinhas",
+        description = "Mantenha a bola no ar!",
+        duration = 12,
+        reward = 60,
+        position = Vector3.new(0, 0, -40),
+    },
+    {
+        id = "tackle_dodge",
+        name = "Fuja do Carrinho",
+        description = "Desvie dos brainrots que dao carrinho!",
+        duration = 15,
+        reward = 90,
+        position = Vector3.new(0, 0, 40),
+    },
+    {
+        id = "target_kick",
+        name = "Tiro ao Alvo",
+        description = "Acerte os alvos com a bola!",
+        duration = 18,
+        reward = 120,
+        position = Vector3.new(-55, 0, -35),
+    },
+    {
+        id = "speed_dribble",
+        name = "Corrida com Bola",
+        description = "Corra com a bola ate o outro lado!",
+        duration = 10,
+        reward = 70,
+        position = Vector3.new(55, 0, 35),
+    },
+}
+
+-- ============================================================
+-- BRAINROT NPCs (decorativos + interativos pelo estadio)
+-- ============================================================
+GameConfig.STADIUM_NPCS = {
+    { name = "Tralalero Torcedor",   color = "Bright red",    pos = Vector3.new(-30, 0, 48),  action = "cheer" },
+    { name = "Bombardino Goleiro",   color = "Bright green",  pos = Vector3.new(-70, 0, 0),   action = "guard" },
+    { name = "Tung Tung Arbitro",    color = "Really black",  pos = Vector3.new(0, 0, 0),     action = "whistle" },
+    { name = "Cappuccino Vendedor",  color = "Brown",         pos = Vector3.new(30, 0, 48),   action = "sell" },
+    { name = "Lirili Comentarista",  color = "Bright purple", pos = Vector3.new(-70, 20, 40), action = "commentate" },
+    { name = "Brio Boss Final",      color = "Gold",          pos = Vector3.new(0, 0, -48),   action = "boss" },
+}
+
+-- ============================================================
+-- LEADERBOARD
 -- ============================================================
 GameConfig.LEADERBOARD_MAX_ENTRIES = 10
-GameConfig.SAVE_INTERVAL_SECONDS   = 300  -- auto-save a cada 5 min
+GameConfig.SAVE_INTERVAL_SECONDS   = 300
 
 return GameConfig

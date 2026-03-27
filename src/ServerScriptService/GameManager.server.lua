@@ -34,16 +34,6 @@ local function onPlayerAdded(player)
     local profile = Instance.new("Folder")
     profile.Name   = "PlayerProfile"
     profile.Parent = player
-
-    -- Andares desbloqueados: andar 1 é sempre gratuito
-    local unlockedFloors = Instance.new("Folder")
-    unlockedFloors.Name = "UnlockedFloors"
-    unlockedFloors.Parent = profile
-
-    local floor1 = Instance.new("BoolValue")
-    floor1.Name  = "Floor_1"
-    floor1.Value = true
-    floor1.Parent = unlockedFloors
 end
 
 Players.PlayerAdded:Connect(onPlayerAdded)

@@ -237,21 +237,9 @@ local function bindLeaderstats()
     end
 end
 
--- Detecta em qual andar o player está (por posição Y)
-local function updateFloorLabel(character)
-    local root = character and character:FindFirstChild("HumanoidRootPart")
-    if not root then return end
-
-    RunService.Heartbeat:Connect(function()
-        local y = root.Position.Y
-        local current = GameConfig.FLOORS[1]
-        for _, f in GameConfig.FLOORS do
-            if y >= f.spawnHeight - 10 then
-                current = f
-            end
-        end
-        floorLabel.Text = "🏟️ " .. current.name
-    end)
+-- Mostra nome do estadio (layout unico)
+local function updateFloorLabel(_character)
+    floorLabel.Text = "🏟️ Estadio Brainrot"
 end
 
 -- Intermission countdown
