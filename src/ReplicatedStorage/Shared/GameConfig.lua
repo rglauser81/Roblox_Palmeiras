@@ -9,7 +9,7 @@ local GameConfig = {}
 -- ============================================================
 -- Coloque o UserId do Nathan aqui (número, ex: 123456789)
 -- Se deixar 0, o PRIMEIRO jogador a entrar vira Nathan (modo teste)
-GameConfig.NATHAN_USER_ID = 0
+GameConfig.NATHAN_USER_ID = 1774574751189
 
 -- Nome exibido na tag do criador
 GameConfig.NATHAN_DISPLAY_NAME = "NathanGaimer42"
