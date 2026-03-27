@@ -48,4 +48,11 @@ makeEvent("FloorUnlocked")      -- server -> client : (floorId)
 makeEvent("GlobalAnnounce")     -- server -> client : (text, color)
 makeEvent("UpdateStats")        -- server -> client : (statsTable)
 
+-- ── FUTEBOL ────────────────────────────────────────────────
+makeEvent("KickBall")           -- client -> server : (direction, charge)
+makeEvent("GoalScored")         -- server -> client : (coins, combo)
+makeEvent("GoalChallengeStart") -- server -> client : (duration)
+makeEvent("GoalChallengeEnd")   -- server -> client : (totalGoals, totalCoins)
+makeEvent("BallHitMob")         -- server -> client : (mobName, damage)
+
 print("[Remotes] Todas as remotas criadas:", #remotesFolder:GetChildren())
