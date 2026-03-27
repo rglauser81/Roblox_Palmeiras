@@ -12,7 +12,7 @@ local GameConfig = {}
 GameConfig.NATHAN_USER_ID = 0
 
 -- Nome exibido na tag do criador
-GameConfig.NATHAN_DISPLAY_NAME = "Nathan"
+GameConfig.NATHAN_DISPLAY_NAME = "NathanGaimer42"
 
 -- ============================================================
 -- 🏟️ ALLIANZ ARENA — ANDARES
