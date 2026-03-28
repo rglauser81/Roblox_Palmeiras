@@ -22,8 +22,8 @@ local lastKick = {} -- [player] = tick()
 -- ============================================================
 local function createBootTool()
     local tool = Instance.new("Tool")
-    tool.Name = "Chuteira Brainrot ⚽"
-    tool.ToolTip = "Clique para chutar! Segure para carregar."
+    tool.Name = "Chuteira Palmeiras ⚽"
+    tool.ToolTip = "Chute para destruir brainrots! Segure para carregar."
     tool.RequiresHandle = true
     tool.CanBeDropped = false
 

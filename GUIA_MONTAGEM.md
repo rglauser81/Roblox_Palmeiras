@@ -1,4 +1,4 @@
-# 🏟️ Guia de Montagem — Allianz Brainrot Arena
+# 🏟️ Guia de Montagem — Allianz Brainrot Arena (Palmeiras Theme)
 
 ## Pré-requisitos
 - Roblox Studio aberto
@@ -19,6 +19,7 @@ DataModel
 │   ├── DataService      ← Script (server)
 │   ├── ShopService      ← Script (server)
 │   ├── CombatService    ← Script (server)
+│   ├── CoinRainService  ← Script (server) — moedas caem no estadio
 │   ├── RoundManager     ← ModuleScript
 │   └── MobSpawner       ← ModuleScript
 │

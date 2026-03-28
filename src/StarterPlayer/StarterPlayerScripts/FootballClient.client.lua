@@ -92,7 +92,7 @@ local challengePanel = Instance.new("Frame")
 challengePanel.Name               = "GoalChallengePanel"
 challengePanel.Size               = UDim2.new(0, 260, 0, 100)
 challengePanel.Position           = UDim2.new(0.5, -130, 0, 160)
-challengePanel.BackgroundColor3   = Color3.fromRGB(15, 50, 15)
+challengePanel.BackgroundColor3   = Color3.fromRGB(0, 50, 0)
 challengePanel.BackgroundTransparency = 0.2
 challengePanel.BorderSizePixel    = 0
 challengePanel.Visible            = false
@@ -268,13 +268,13 @@ end
 
 local function watchForTool(character)
     for _, child in character:GetChildren() do
-        if child:IsA("Tool") and child.Name:match("Chuteira") then
+        if child:IsA("Tool") and (child.Name:match("Chuteira") or child.Name:match("Palmeiras")) then
             child.Equipped:Connect(onToolEquipped)
             child.Unequipped:Connect(onToolUnequipped)
         end
     end
     character.ChildAdded:Connect(function(child)
-        if child:IsA("Tool") and child.Name:match("Chuteira") then
+        if child:IsA("Tool") and (child.Name:match("Chuteira") or child.Name:match("Palmeiras")) then
             child.Equipped:Connect(onToolEquipped)
             child.Unequipped:Connect(onToolUnequipped)
         end

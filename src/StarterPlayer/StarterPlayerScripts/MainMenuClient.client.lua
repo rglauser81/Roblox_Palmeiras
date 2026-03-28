@@ -1,6 +1,6 @@
 -- MainMenuClient.client.lua
--- Menu principal com 3 abas: Loja, Rebirth, Indice Brainrot
--- Botoes fixos na parte inferior da tela
+-- Menu principal Allianz Brainrot Arena com 3 abas: Loja, Rebirth, Indice Brainrot
+-- Botoes fixos na parte inferior da tela — tema Palmeiras (verde/branco/dourado)
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -25,12 +25,12 @@ local bottomBar = Instance.new("Frame")
 bottomBar.Name = "BottomBar"
 bottomBar.Size = UDim2.new(0, 400, 0, 60)
 bottomBar.Position = UDim2.new(0.5, -200, 1, -70)
-bottomBar.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-bottomBar.BackgroundTransparency = 0.2
+bottomBar.BackgroundColor3 = Color3.fromRGB(0, 50, 0)
+bottomBar.BackgroundTransparency = 0.15
 bottomBar.BorderSizePixel = 0
 bottomBar.Parent = gui
 Instance.new("UICorner", bottomBar).CornerRadius = UDim.new(0, 14)
-Instance.new("UIStroke", bottomBar).Color = Color3.fromRGB(80, 80, 100)
+Instance.new("UIStroke", bottomBar).Color = Color3.fromRGB(0, 140, 0)
 
 local barLayout = Instance.new("UIListLayout")
 barLayout.FillDirection = Enum.FillDirection.Horizontal
@@ -40,9 +40,9 @@ barLayout.Padding = UDim.new(0, 10)
 barLayout.Parent = bottomBar
 
 local TABS = {
-    { id = "shop",    label = "Loja",    color = Color3.fromRGB(255, 200, 0) },
-    { id = "rebirth", label = "Rebirth", color = Color3.fromRGB(255, 80, 255) },
-    { id = "index",   label = "Indice",  color = Color3.fromRGB(0, 200, 255) },
+    { id = "shop",    label = "Loja",    color = Color3.fromRGB(255, 215, 0) },
+    { id = "rebirth", label = "Rebirth", color = Color3.fromRGB(0, 200, 50) },
+    { id = "index",   label = "Indice",  color = Color3.fromRGB(255, 255, 255) },
 }
 
 -- ============================================================
@@ -52,7 +52,7 @@ local panelFrame = Instance.new("Frame")
 panelFrame.Name = "PanelFrame"
 panelFrame.Size = UDim2.new(0, 640, 0, 440)
 panelFrame.Position = UDim2.new(0.5, -320, 0.5, -240)
-panelFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 24)
+panelFrame.BackgroundColor3 = Color3.fromRGB(5, 30, 5)
 panelFrame.BorderSizePixel = 0
 panelFrame.Visible = false
 panelFrame.Parent = gui
@@ -131,7 +131,7 @@ end
 -- ============================================================
 local function openShopTab()
     clearContent()
-    panelTitle.Text = "Loja Brainrot"
+    panelTitle.Text = "Loja Brainrot Arena"
     panelTitle.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
 
     -- Info de coins
@@ -665,4 +665,4 @@ Remotes:WaitForChild("OpenShop").OnClientEvent:Connect(function()
     openTab("shop")
 end)
 
-print("[MainMenuClient] Menu principal carregado! (Loja / Rebirth / Indice)")
+print("[MainMenuClient] Menu Allianz Brainrot Arena carregado! (Loja / Rebirth / Indice)")

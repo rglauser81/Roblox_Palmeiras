@@ -1,6 +1,6 @@
 -- StadiumBuilder.server.lua
--- Constroi o Estadio Brainrot: campo, gols, arquibancadas, NPCs,
--- mini-games espalhados, loja, decoracoes por toda parte
+-- Constroi o Allianz Brainrot Arena: campo, gols, arquibancadas Palmeiras,
+-- arco de entrada, NPCs brainrot, mini-games, loja, decoracoes, moedas
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
@@ -73,8 +73,8 @@ local function cleanup()
     local names = {
         "Stadium", "FootballField", "Stands_N", "Stands_S", "Stands_E", "Stands_W",
         "Goals", "NathanShop", "FootballPitch", "SpawnPoints_Floor1",
-        "MinigameZones", "StadiumNPCs", "StadiumDecorations",
-        "Floor_1", "Floor_2", "Floor_3", "Floor_4",
+        "MinigameZones", "StadiumNPCs", "StadiumDecorations", "EntranceArch",
+        "Floor_1", "Floor_2", "Floor_3", "Floor_4", "CoinRain",
     }
     for _, n in names do
         local obj = workspace:FindFirstChild(n)
@@ -214,7 +214,8 @@ end
 -- ARQUIBANCADAS (4 lados com assentos coloridos)
 -- ============================================================
 local function buildStands(parent)
-    local seatColors = {"Bright red", "Bright green", "Bright yellow", "White", "Bright blue"}
+    -- Palmeiras: verde e branco alternados
+    local seatColors = {"Dark green", "White", "Bright green", "White", "Forest green"}
     local rowDepth = 4
     local rowHeight = 3
 
@@ -340,23 +341,23 @@ local function buildShop(parent)
     local shopZ = 0
     local shopY = FIELD_Y
 
-    -- Barraca da loja
+    -- Barraca da loja (verde e dourado Palmeiras)
     local floor = part(shopFolder, "ShopFloor",
         Vector3.new(10, 0.5, 14),
         CFrame.new(shopX, shopY + 0.25, shopZ),
-        "Bright yellow", Enum.Material.Neon)
+        "Bright green", Enum.Material.Neon)
 
     -- Balcao
     local counter = part(shopFolder, "Counter",
         Vector3.new(8, 2.5, 2),
         CFrame.new(shopX, shopY + 1.75, shopZ + 5),
-        "Bright yellow", Enum.Material.Neon)
+        "Gold", Enum.Material.Glass)
 
     -- Telhado
     local roof = part(shopFolder, "Roof",
         Vector3.new(12, 0.5, 16),
         CFrame.new(shopX, shopY + 8, shopZ),
-        "Bright yellow", Enum.Material.Neon)
+        "Dark green", Enum.Material.SmoothPlastic)
 
     -- Pilares
     for _, offset in {Vector3.new(-5, 0, -6), Vector3.new(5, 0, -6), Vector3.new(-5, 0, 6), Vector3.new(5, 0, 6)} do
@@ -370,9 +371,9 @@ local function buildShop(parent)
     local sign = part(shopFolder, "Sign",
         Vector3.new(10, 2, 0.4),
         CFrame.new(shopX, shopY + 9.5, shopZ),
-        "Bright yellow", Enum.Material.Neon)
-    label(sign, "LOJA DO NATHAN", Color3.fromRGB(0,0,0), Enum.NormalId.Front)
-    label(sign, "LOJA DO NATHAN", Color3.fromRGB(0,0,0), Enum.NormalId.Back)
+        "Gold", Enum.Material.Neon)
+    label(sign, "LOJA DO PORCO DOURADO", Color3.fromRGB(0,80,0), Enum.NormalId.Front)
+    label(sign, "LOJA DO PORCO DOURADO", Color3.fromRGB(0,80,0), Enum.NormalId.Back)
 
     -- Trigger
     local trigger = part(shopFolder, "ShopTrigger",
@@ -611,16 +612,16 @@ local function buildDecorations(parent)
         Vector3.new(0.5, 12, 24),
         CFrame.new(FIELD_L/2 + 28, FIELD_Y + 18, 0),
         "Really black", Enum.Material.Glass)
-    label(telao, "BRAINROT FOOTBALL STADIUM", Color3.fromRGB(255, 215, 0), Enum.NormalId.Back)
+    label(telao, "ALLIANZ BRAINROT ARENA", Color3.fromRGB(255, 215, 0), Enum.NormalId.Back)
 
-    -- Faixas decorativas penduradas
-    local bannerTexts = {"TRALALERO!", "GOL!", "BRAINROT!", "TUNG TUNG!", "BOMBARDINO!"}
+    -- Faixas decorativas penduradas — Palmeiras brainrot
+    local bannerTexts = {"AVANTI PALESTRA!", "GOOOOL!", "BRAINROT!", "PORCO DOURADO!", "VERDAO!"}
     for i, text in bannerTexts do
         local bx = -FIELD_L/2 + (i-1) * (FIELD_L / (#bannerTexts - 1))
         local banner = part(decoFolder, "Banner_"..i,
             Vector3.new(8, 3, 0.2),
             CFrame.new(bx, FIELD_Y + 22, -FIELD_W/2 - 10),
-            "Bright blue", Enum.Material.Fabric)
+            "Dark green", Enum.Material.Fabric)
         label(banner, text, Color3.fromRGB(255, 255, 255), Enum.NormalId.Back)
         label(banner, text, Color3.fromRGB(255, 255, 255), Enum.NormalId.Front)
     end
@@ -646,25 +647,143 @@ local function buildDecorations(parent)
         d.Parent = b
     end
 
-    -- Troféu dourado no centro do campo (decorativo)
-    local trophy = part(decoFolder, "Trophy",
-        Vector3.new(2, 5, 2),
-        CFrame.new(0, FIELD_Y + 2.5, FIELD_W/2 + 6),
+    -- Trofeu Porco Dourado no centro (como na imagem do jogo)
+    local trophy = part(decoFolder, "PorcoDouradoBase",
+        Vector3.new(4, 2, 4),
+        CFrame.new(0, FIELD_Y + 1, FIELD_W/2 + 8),
         "Gold", Enum.Material.Glass)
 
-    local trophyTop = part(decoFolder, "TrophyTop",
-        Vector3.new(3, 1, 3),
-        CFrame.new(0, FIELD_Y + 5.5, FIELD_W/2 + 6),
+    local porcoBody = part(decoFolder, "PorcoDourado",
+        Vector3.new(6, 5, 5),
+        CFrame.new(0, FIELD_Y + 5, FIELD_W/2 + 8),
         "Gold", Enum.Material.Glass)
 
-    billboard(trophy, "TROFEU BRAINROT", Color3.fromRGB(255, 215, 0), Vector3.new(0, 5, 0))
+    local porcoHead = part(decoFolder, "PorcoHead",
+        Vector3.new(3.5, 3.5, 3.5),
+        CFrame.new(0, FIELD_Y + 8.5, FIELD_W/2 + 8),
+        "Gold", Enum.Material.Glass)
+    porcoHead.Shape = Enum.PartType.Ball
+
+    -- Coroa do Porco Dourado
+    local crown = part(decoFolder, "PorcoCrown",
+        Vector3.new(3, 1.5, 3),
+        CFrame.new(0, FIELD_Y + 10.5, FIELD_W/2 + 8),
+        "Gold", Enum.Material.Neon)
+
+    -- Brilho do Porco Dourado
+    local porcoLight = Instance.new("PointLight")
+    porcoLight.Range = 40
+    porcoLight.Brightness = 3
+    porcoLight.Color = Color3.fromRGB(255, 215, 0)
+    porcoLight.Parent = porcoBody
+
+    -- Particulas de moedas ao redor do Porco Dourado
+    local coinParticles = Instance.new("ParticleEmitter")
+    coinParticles.Color = ColorSequence.new(Color3.fromRGB(255, 215, 0))
+    coinParticles.Size = NumberSequence.new(0.8)
+    coinParticles.Lifetime = NumberRange.new(2, 4)
+    coinParticles.Rate = 8
+    coinParticles.Speed = NumberRange.new(3, 8)
+    coinParticles.SpreadAngle = Vector2.new(180, 180)
+    coinParticles.LightEmission = 0.8
+    coinParticles.Parent = porcoBody
+
+    billboard(porcoHead, "PORCO DOURADO REI", Color3.fromRGB(255, 215, 0), Vector3.new(0, 4, 0))
+end
+
+-- ============================================================
+-- ARCO DE ENTRADA "ALLIANZ BRAINROT ARENA"
+-- ============================================================
+local function buildEntranceArch(parent)
+    local archFolder = Instance.new("Folder")
+    archFolder.Name = "EntranceArch"
+    archFolder.Parent = parent
+
+    local archZ = -FIELD_W/2 - 25
+    local archW = 60
+    local archH = 35
+    local pillarW = 4
+
+    -- Pilar esquerdo (verde Palmeiras)
+    local pillarL = part(archFolder, "PillarL",
+        Vector3.new(pillarW, archH, pillarW),
+        CFrame.new(-archW/2, FIELD_Y + archH/2, archZ),
+        "Dark green", Enum.Material.Concrete)
+
+    -- Pilar direito
+    local pillarR = part(archFolder, "PillarR",
+        Vector3.new(pillarW, archH, pillarW),
+        CFrame.new(archW/2, FIELD_Y + archH/2, archZ),
+        "Dark green", Enum.Material.Concrete)
+
+    -- Travessa superior (arco)
+    local topBar = part(archFolder, "TopBar",
+        Vector3.new(archW + pillarW, 6, pillarW + 2),
+        CFrame.new(0, FIELD_Y + archH + 3, archZ),
+        "Dark green", Enum.Material.Concrete)
+
+    -- Letreiro principal "ALLIANZ BRAINROT ARENA"
+    local signMain = part(archFolder, "SignMain",
+        Vector3.new(archW - 4, 8, 0.5),
+        CFrame.new(0, FIELD_Y + archH + 10, archZ),
+        "Really black", Enum.Material.Glass)
+    label(signMain, "ALLIANZ BRAINROT ARENA", Color3.fromRGB(255, 215, 0), Enum.NormalId.Front)
+    label(signMain, "ALLIANZ BRAINROT ARENA", Color3.fromRGB(255, 215, 0), Enum.NormalId.Back)
+
+    -- Letreiro neon por tras
+    local signGlow = part(archFolder, "SignGlow",
+        Vector3.new(archW - 2, 9, 0.3),
+        CFrame.new(0, FIELD_Y + archH + 10, archZ - 0.5),
+        "Bright green", Enum.Material.Neon)
+    signGlow.Transparency = 0.4
+
+    -- Luzes no arco
+    for _, xOff in { -archW/4, 0, archW/4 } do
+        local archLight = part(archFolder, "ArchLight",
+            Vector3.new(2, 1, 2),
+            CFrame.new(xOff, FIELD_Y + archH + 0.5, archZ),
+            "Institutional white", Enum.Material.Neon)
+        local pl = Instance.new("PointLight")
+        pl.Range = 30
+        pl.Brightness = 2
+        pl.Color = Color3.fromRGB(0, 200, 50)
+        pl.Parent = archLight
+    end
+
+    -- Detalhes dourados nos pilares
+    for _, pillar in { pillarL, pillarR } do
+        local goldBand = part(archFolder, "GoldBand",
+            Vector3.new(pillarW + 0.5, 2, pillarW + 0.5),
+            CFrame.new(pillar.Position.X, FIELD_Y + archH - 1, archZ),
+            "Gold", Enum.Material.Glass)
+        local goldBase = part(archFolder, "GoldBase",
+            Vector3.new(pillarW + 1, 2, pillarW + 1),
+            CFrame.new(pillar.Position.X, FIELD_Y + 1, archZ),
+            "Gold", Enum.Material.Glass)
+    end
+
+    -- Escudo do Palmeiras simplificado (circulo verde com P branco)
+    local shield = part(archFolder, "PalmeirasShield",
+        Vector3.new(6, 6, 0.5),
+        CFrame.new(0, FIELD_Y + archH + 19, archZ),
+        "Dark green", Enum.Material.Glass)
+    label(shield, "P", Color3.fromRGB(255, 255, 255), Enum.NormalId.Front)
+    label(shield, "P", Color3.fromRGB(255, 255, 255), Enum.NormalId.Back)
+
+    -- Estrelas douradas (titulos)
+    for i = -2, 2 do
+        local star = part(archFolder, "Star_"..i,
+            Vector3.new(1.2, 1.2, 0.3),
+            CFrame.new(i * 3, FIELD_Y + archH + 26, archZ),
+            "Gold", Enum.Material.Neon)
+    end
 end
 
 -- ============================================================
 -- CONSTRUCAO PRINCIPAL
 -- ============================================================
 local function buildStadium()
-    print("[StadiumBuilder] Construindo Estadio Brainrot...")
+    print("[StadiumBuilder] Construindo Allianz Brainrot Arena...")
 
     cleanup()
 
@@ -677,11 +796,11 @@ local function buildStadium()
     local baseplate = workspace:FindFirstChild("Baseplate")
     if baseplate then baseplate:Destroy() end
 
-    -- Terreno base (chao ao redor do estadio)
+    -- Terreno base (chao ao redor do estadio — verde Palmeiras)
     local ground = part(stadium, "Ground",
-        Vector3.new(400, 1, 400),
+        Vector3.new(500, 1, 500),
         CFrame.new(0, FIELD_Y - 0.5, 0),
-        "Earth green", Enum.Material.Grass)
+        "Dark green", Enum.Material.Grass)
 
     -- Constroi tudo
     buildField(stadium)
@@ -691,15 +810,37 @@ local function buildStadium()
     buildMinigameZones(stadium)
     buildNPCs(stadium)
     buildDecorations(stadium)
+    buildEntranceArch(stadium)
 
-    -- Iluminacao
-    game.Lighting.Ambient         = Color3.fromRGB(60, 80, 60)
-    game.Lighting.OutdoorAmbient  = Color3.fromRGB(120, 140, 120)
-    game.Lighting.Brightness      = 2
+    -- Iluminacao — noturna com refletores (estilo jogo noturno)
+    game.Lighting.Ambient         = Color3.fromRGB(30, 50, 30)
+    game.Lighting.OutdoorAmbient  = Color3.fromRGB(40, 70, 40)
+    game.Lighting.Brightness      = 1.5
     game.Lighting.GlobalShadows   = true
-    game.Lighting.ClockTime       = 15 -- tarde/entardecer
+    game.Lighting.ClockTime       = 20.5 -- noite com refletores
 
-    print("[StadiumBuilder] Estadio construido com sucesso!")
+    -- Verde atmosferico Palmeiras
+    local atmosphere = game.Lighting:FindFirstChildOfClass("Atmosphere")
+    if not atmosphere then
+        atmosphere = Instance.new("Atmosphere")
+        atmosphere.Parent = game.Lighting
+    end
+    atmosphere.Density = 0.15
+    atmosphere.Glare = 0.3
+    atmosphere.Haze = 2
+    atmosphere.Color = Color3.fromRGB(20, 60, 20)
+
+    -- Bloom dourado para efeito de moedas brilhantes
+    local bloom = game.Lighting:FindFirstChildOfClass("BloomEffect")
+    if not bloom then
+        bloom = Instance.new("BloomEffect")
+        bloom.Parent = game.Lighting
+    end
+    bloom.Intensity = 0.5
+    bloom.Threshold = 0.8
+    bloom.Size = 24
+
+    print("[StadiumBuilder] Allianz Brainrot Arena construida com sucesso!")
 end
 
 buildStadium()

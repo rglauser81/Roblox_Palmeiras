@@ -1,5 +1,5 @@
 -- ArenaHud.client.lua
--- 🎮 HUD da arena: rodada, andar atual, kills, coins, anúncios globais
+-- 🎮 HUD da Allianz Brainrot Arena: rodada, kills, coins, anúncios globais
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -33,15 +33,15 @@ end
 
 -- ── Painel superior direito (rodada + local) ──────────────
 local topLeft = Instance.new("Frame")
-topLeft.Size              = UDim2.new(0, 240, 0, 80)
-topLeft.Position          = UDim2.new(1, -254, 0, 14)
-topLeft.BackgroundColor3  = Color3.fromRGB(15, 15, 20)
-topLeft.BackgroundTransparency = 0.3
+topLeft.Size              = UDim2.new(0, 280, 0, 80)
+topLeft.Position          = UDim2.new(1, -294, 0, 14)
+topLeft.BackgroundColor3  = Color3.fromRGB(0, 50, 0)
+topLeft.BackgroundTransparency = 0.25
 topLeft.BorderSizePixel   = 0
 topLeft.Parent            = hud
 Instance.new("UICorner", topLeft).CornerRadius = UDim.new(0, 14)
 local tlStroke = Instance.new("UIStroke", topLeft)
-tlStroke.Color = Color3.fromRGB(60, 60, 80)
+tlStroke.Color = Color3.fromRGB(0, 140, 0)
 tlStroke.Thickness = 2
 
 local roundLabel = Instance.new("TextLabel")
@@ -62,7 +62,7 @@ floorLabel.Name             = "FloorLabel"
 floorLabel.Size             = UDim2.new(1, -12, 0, 28)
 floorLabel.Position         = UDim2.new(0, 8, 0, 40)
 floorLabel.BackgroundTransparency = 1
-floorLabel.Text             = "🏟️ Estadio Brainrot"
+floorLabel.Text             = "🏟️ Allianz Brainrot Arena"
 floorLabel.TextColor3       = Color3.fromRGB(200, 200, 220)
 floorLabel.Font             = Enum.Font.FredokaOne
 floorLabel.TextSize         = 14
@@ -87,7 +87,7 @@ hpBgStroke.Thickness = 3
 local hpBar = Instance.new("Frame")
 hpBar.Name               = "HpBar"
 hpBar.Size               = UDim2.new(1, 0, 1, 0)
-hpBar.BackgroundColor3   = Color3.fromRGB(220, 50, 50)
+hpBar.BackgroundColor3   = Color3.fromRGB(0, 180, 50)
 hpBar.BorderSizePixel    = 0
 hpBar.Parent             = hpBarBg
 Instance.new("UICorner", hpBar).CornerRadius = UDim.new(0, 12)
@@ -216,7 +216,7 @@ local function bindLeaderstats() end
 
 -- Mostra nome do estadio (layout unico)
 local function updateFloorLabel(_character)
-    floorLabel.Text = "🏟️ Estadio Brainrot"
+    floorLabel.Text = "🏟️ Allianz Brainrot Arena"
 end
 
 -- Intermission countdown

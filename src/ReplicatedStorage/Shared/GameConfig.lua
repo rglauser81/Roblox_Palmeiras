@@ -1,5 +1,6 @@
 -- GameConfig.lua
--- Configuracao central do Brainrot Football Stadium
+-- Configuracao central do Allianz Brainrot Arena
+-- Tema: Palmeiras (verde e branco) + universo brainrot italiano
 -- Estrutura: 1 campo grande + arquibancadas + mini-games espalhados
 
 local GameConfig = {}
@@ -11,25 +12,38 @@ GameConfig.NATHAN_USER_ID = 1774574751189
 GameConfig.NATHAN_DISPLAY_NAME = "NathanGaimer42"
 
 -- ============================================================
--- ESTADIO — Layout unico (sem andares multiplos)
+-- ALLIANZ BRAINROT ARENA — Palmeiras Theme
 -- ============================================================
+GameConfig.ARENA_NAME = "Allianz Brainrot Arena"
+
+GameConfig.PALMEIRAS = {
+    GREEN_PRIMARY   = Color3.fromRGB(0, 100, 0),      -- verde escuro Palmeiras
+    GREEN_LIGHT     = Color3.fromRGB(34, 139, 34),     -- verde claro
+    GREEN_NEON      = Color3.fromRGB(0, 200, 50),      -- verde neon destaque
+    WHITE           = Color3.fromRGB(255, 255, 255),   -- branco
+    GOLD            = Color3.fromRGB(255, 215, 0),     -- dourado (coins/destaques)
+    DARK            = Color3.fromRGB(15, 25, 15),      -- fundo escuro verde
+}
+
 GameConfig.STADIUM = {
-    FIELD_LENGTH   = 240,   -- comprimento do campo (X) +50%
-    FIELD_WIDTH    = 150,   -- largura do campo (Z) +50%
+    FIELD_LENGTH   = 240,   -- comprimento do campo (X)
+    FIELD_WIDTH    = 150,   -- largura do campo (Z)
     FIELD_Y        = 0,     -- altura do gramado
     STAND_HEIGHT   = 20,    -- altura das arquibancadas
     STAND_ROWS     = 5,     -- fileiras de assentos
+    ARCH_HEIGHT    = 40,    -- altura do arco de entrada
+    ARCH_WIDTH     = 60,    -- largura do arco
 }
 
 -- Mantém FLOORS para compatibilidade (1 andar só)
 GameConfig.FLOORS = {
     {
         id = 1,
-        name = "Estadio Brainrot",
-        theme = "Stadium",
+        name = "Allianz Brainrot Arena",
+        theme = "Palmeiras",
         unlockPrice = 0,
         spawnHeight = 0,
-        color = Color3.fromRGB(34, 139, 34),
+        color = Color3.fromRGB(0, 100, 0),
     },
 }
 
@@ -205,12 +219,26 @@ GameConfig.MINIGAMES = {
 -- BRAINROT NPCs (decorativos + interativos pelo estadio)
 -- ============================================================
 GameConfig.STADIUM_NPCS = {
-    { name = "Tralalero Torcedor",   color = "Bright red",    pos = Vector3.new(-45, 0, 72),  action = "cheer" },
-    { name = "Bombardino Goleiro",   color = "Bright green",  pos = Vector3.new(-105, 0, 0),  action = "guard" },
-    { name = "Tung Tung Arbitro",    color = "Really black",  pos = Vector3.new(0, 0, 0),     action = "whistle" },
-    { name = "Cappuccino Vendedor",  color = "Brown",         pos = Vector3.new(45, 0, 72),   action = "sell" },
-    { name = "Lirili Comentarista",  color = "Bright purple", pos = Vector3.new(-105, 20, 60), action = "commentate" },
-    { name = "Brio Boss Final",      color = "Gold",          pos = Vector3.new(0, 0, -72),   action = "boss" },
+    { name = "Tralalero Torcedor",        color = "Bright green",   pos = Vector3.new(-45, 0, 72),  action = "cheer" },
+    { name = "Bombardino Goleiro",        color = "Dark green",     pos = Vector3.new(-105, 0, 0),  action = "guard" },
+    { name = "Tung Tung Arbitro",         color = "Really black",   pos = Vector3.new(0, 0, 0),     action = "whistle" },
+    { name = "Porco Dourado Vendedor",    color = "Gold",           pos = Vector3.new(45, 0, 72),   action = "sell" },
+    { name = "Anjo Brainrot Comentarista",color = "Bright green",   pos = Vector3.new(-105, 20, 60), action = "commentate" },
+    { name = "Elefante Morango Mascote",  color = "Bright red",     pos = Vector3.new(30, 0, -72),  action = "cheer" },
+    { name = "Brio Boss Final",           color = "Gold",           pos = Vector3.new(0, 0, -72),   action = "boss" },
+}
+
+-- ============================================================
+-- MOEDAS E EFEITOS VISUAIS
+-- ============================================================
+GameConfig.COIN_RAIN = {
+    ENABLED            = true,
+    COINS_PER_BURST    = 12,
+    BURST_INTERVAL     = 8,     -- segundos entre chuvas de moedas
+    COIN_LIFETIME      = 5,
+    COIN_SIZE          = 1.5,
+    COLLECT_RADIUS     = 6,
+    COLLECT_REWARD     = 1,
 }
 
 -- ============================================================

@@ -60,6 +60,48 @@ local function onPlayerAdded(player)
     local brainrotIndex = Instance.new("Folder")
     brainrotIndex.Name = "BrainrotIndex"
     brainrotIndex.Parent = profile
+
+    -- Aplica uniforme Palmeiras ao personagem
+    local function applyPalmeirasJersey(character)
+        task.wait(0.5) -- espera o character carregar
+        local pal = GameConfig.PALMEIRAS
+        if not pal then return end
+
+        local bodyColors = character:FindFirstChildOfClass("BodyColors")
+        if not bodyColors then
+            bodyColors = Instance.new("BodyColors")
+            bodyColors.Parent = character
+        end
+
+        -- Camisa verde Palmeiras (torso + bracos)
+        bodyColors.TorsoColor3 = pal.GREEN_PRIMARY
+        bodyColors.LeftArmColor3 = pal.GREEN_PRIMARY
+        bodyColors.RightArmColor3 = pal.GREEN_PRIMARY
+        -- Calção branco (pernas)
+        bodyColors.LeftLegColor3 = pal.WHITE
+        bodyColors.RightLegColor3 = pal.WHITE
+        -- Cabeca normal
+        bodyColors.HeadColor3 = Color3.fromRGB(234, 198, 158)
+
+        -- Shirt verde com detalhes
+        local shirt = character:FindFirstChildOfClass("Shirt")
+        if not shirt then
+            shirt = Instance.new("Shirt")
+            shirt.Parent = character
+        end
+
+        -- Pants branco
+        local pants = character:FindFirstChildOfClass("Pants")
+        if not pants then
+            pants = Instance.new("Pants")
+            pants.Parent = character
+        end
+    end
+
+    player.CharacterAdded:Connect(applyPalmeirasJersey)
+    if player.Character then
+        applyPalmeirasJersey(player.Character)
+    end
 end
 
 Players.PlayerAdded:Connect(onPlayerAdded)

@@ -1,6 +1,6 @@
-# Brainrot Game — Roblox
+# Allianz Brainrot Arena — Roblox
 
-Jogo de ondas (wave survival) com mobs temáticos do universo **brainrot italiano/internet**.
+Jogo de ondas (wave survival) com mobs temáticos do universo **brainrot italiano/internet** no estádio **Allianz Brainrot Arena** — tema **Palmeiras** (verde e branco).
 
 ## Estrutura do Projeto
 
@@ -35,11 +35,27 @@ Roblox_Palmeiras/
 | Mob | Raridade | HP Base | Velocidade |
 |-----|----------|---------|------------|
 | Tralalero Tralala | Comum | 100 | 16 |
+| Boneca Ambalabu | Comum | 80 | 18 |
+| Frigo Camelo | Comum | 120 | 14 |
+| Salmino Pinguino | Comum | 90 | 20 |
+| Morango Filhote | Comum | 70 | 22 |
 | Bombardino Coccodrillo | Incomum | 200 | 12 |
 | Tung Tung Tung Sahur | Incomum | 150 | 18 |
+| Chimpanzini Bananini | Incomum | 180 | 16 |
+| Ballerina Cappuccina | Incomum | 160 | 14 |
+| Dino Verde | Incomum | 170 | 17 |
+| Anjinho Brainrot | Incomum | 140 | 20 |
 | Cappuccino Assassino | Raro | 400 | 10 |
+| Glorbo Fruttodrillo | Raro | 350 | 11 |
+| La Vaca Saturno | Raro | 500 | 8 |
+| Elefante Morango | Raro | 600 | 9 |
 | Lirili Larila | Épico | 800 | 8 |
+| Trippi Troppi | Épico | 700 | 10 |
+| Bobrito Frittomisto | Épico | 1000 | 7 |
+| Crocodilo Dourado | Épico | 1200 | 7 |
+| Anjo Brainrot | Épico | 900 | 12 |
 | Brio Branta Supremo | Lendário (Boss) | 2000 | 6 |
+| Porco Dourado Rei | Lendário (Boss) | 3000 | 5 |
 
 ## Setup com Rojo
 
