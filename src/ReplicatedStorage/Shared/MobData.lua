@@ -224,6 +224,17 @@ MobData.mobs = {
         headColor = Color3.fromRGB(200, 255, 200),
         hasWings = true,
     },
+    Pinguelo = {
+        displayName = "Pinguelo",
+        rarity = "raro",
+        baseHp = 450,
+        baseDamage = 38,
+        speed = 13,
+        coinReward = 65,
+        description = "O pinguim brainrot gelado! Desliza pelo campo e congela quem encosta.",
+        bodyColor = Color3.fromRGB(30, 60, 180),
+        headColor = Color3.fromRGB(200, 220, 255),
+    },
 }
 
 function MobData.get(name)
